@@ -1,0 +1,872 @@
+.translation-window {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 400px;
+  /* Más ancho */
+  height: 600px;
+  /* Más alto */
+  background: rgba(33, 33, 33, 0.95);
+  color: white;
+  border-radius: 8px;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.translation-header {
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: move;
+  user-select: none;
+}
+
+.translation-content {
+  padding: 10px;
+  overflow-y: auto;
+  background: rgba(33, 33, 33, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  height: calc(100% - 60px);
+}
+
+.translation-message {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Estilo para el nombre de usuario */
+.translation-username {
+  color: #00ff9d;
+  font-weight: bold;
+  display: inline;
+}
+
+/* Estilo para el texto original (más pequeño y menos prominente) */
+.translation-original {
+  color: #aaa;
+  font-size: 0.8em;
+  /* Más pequeño */
+  margin-bottom: 8px;
+  font-style: italic;
+  /* Opcional: añade estilo cursivo */
+}
+
+/* Estilo para el idioma detectado (más brillante y resaltado) */
+.translation-lang {
+  color: #ffcc00;
+  /* Color más brillante */
+  font-size: 0.9em;
+  /* Tamaño intermedio */
+  font-weight: bold;
+  /* Resaltado */
+  margin: 4px 0;
+}
+
+/* Estilo para el texto traducido (más grande y más prominente) */
+.translation-text {
+  color: #ffffff;
+  font-weight: bold;
+  /* Más grueso para mayor énfasis */
+  font-size: 1.4em;
+  /* Más grande */
+  background: rgba(255, 255, 255, 0.1);
+  /* Fondo suave */
+  padding: 10px;
+  border-radius: 6px;
+  border-left: 4px solid #00ff9d;
+  /* Línea decorativa */
+  word-break: break-word;
+}
+
+.translation-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.translation-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.translation-status {
+  backdrop-filter: blur(3px);
+}
+
+.translation-controls-tab {
+  background: rgba(50, 50, 50, 0.95);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-block;
+  margin-bottom: -1px;
+}
+
+.translation-controls-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.translation-controls-tab.active {
+  background: #00ff9d;
+  color: #000;
+}
+
+.translation-controls {
+  padding: 10px;
+  background: rgba(40, 40, 40, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.control-button {
+  background: rgba(33, 33, 33, 0.95);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.control-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #00ff9d;
+  color: #00ff9d;
+}
+
+.control-button:active {
+  background: #00ff9d;
+  color: black;
+  border-color: black;
+}
+
+.translation-controls-container {
+  display: none;
+  padding: 10px;
+  background: rgba(33, 33, 33, 0.95);
+  border-radius: 0 0 8px 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.translation-controls-container.open {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 6px 10px;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 4px;
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #00ff9d;
+  color: #00ff9d;
+}
+
+.translation-commands {
+  padding: 10px;
+  background: rgba(40, 40, 40, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: nwse-resize;
+  border-radius: 0 0 4px 0;
+  z-index: 10;
+  /* Asegúrate de que esté encima */
+}
+
+.resize-handle:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.translation-window.resizing {
+  user-select: none;
+}
+
+.translation-content.resizing {
+  user-select: none;
+}
+
+/* Estilo general del scrollbar */
+.translation-content::-webkit-scrollbar {
+  width: 20px;
+  /* Ancho del scroll vertical */
+  height: 10px;
+  /* Altura del scroll horizontal */
+}
+
+/* Track del scrollbar (fondo) */
+.translation-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  /* Fondo semi-transparente */
+  border-radius: 10px;
+  /* Bordes redondeados */
+}
+
+/* Barra del scrollbar (la que se mueve) */
+.translation-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 157, 0.7);
+  /* Color principal */
+  border-radius: 10px;
+  /* Bordes redondeados */
+  border: 2px solid rgba(33, 33, 33, 0.95);
+  /* Da un efecto de separación */
+}
+
+/* Scrollbar al hacer hover */
+.translation-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 157, 0.9);
+  /* Más intenso al hacer hover */
+}
+
+/* Scrollbar al estar activo (dragging) */
+.translation-content::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 255, 157, 1);
+  /* Color sólido al estar activo */
+}
+
+/* Soporte para Firefox */
+.translation-content {
+  scrollbar-width: auto;
+  /* Scroll más delgado */
+  scrollbar-color: rgba(0, 255, 157, 0.7) rgba(255, 255, 255, 0.1);
+  /* Barra y fondo */
+}
+
+/* Estilos para el handle de redimensionado */
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: nwse-resize;
+  border-radius: 0 0 4px 0;
+  z-index: 10;
+}
+
+.resize-handle:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Durante el redimensionado, deshabilitamos la selección de texto */
+.translation-window.resizing,
+.translation-content.resizing {
+  user-select: none;
+}
+
+/* ================================================================= */
+/* MODAL DE LOGIN ULTRA MODERNO - ESTILO GLASSMORPHISM */
+/* ================================================================= */
+
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 255, 157, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 204, 122, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+    rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: authOverlayFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes authOverlayFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(20px);
+  }
+}
+
+.auth-modal {
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  width: 440px;
+  max-width: 95vw;
+  overflow: hidden;
+  position: relative;
+  animation: authModalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Efecto de brillo sutil en el modal */
+.auth-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.08),
+      transparent);
+  animation: authShimmer 3s infinite;
+}
+
+@keyframes authShimmer {
+  0% {
+    left: -100%;
+  }
+
+  50% {
+    left: 100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes authModalSlideIn {
+  from {
+    transform: translateY(-40px) scale(0.95);
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* ================================================================= */
+/* HEADER ULTRA MODERNO */
+/* ================================================================= */
+
+.auth-header {
+  padding: 32px 32px 24px;
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.auth-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 32px;
+  right: 32px;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 255, 157, 0.3) 50%,
+      transparent 100%);
+}
+
+.auth-header h2 {
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+.auth-close {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-close::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.auth-close:hover {
+  background: rgba(255, 60, 60, 0.1);
+  border-color: rgba(255, 60, 60, 0.3);
+  color: #ff6b6b;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 60, 60, 0.2);
+}
+
+.auth-close:hover::before {
+  opacity: 1;
+}
+
+/* ================================================================= */
+/* FORMULARIO MODERNO CON EFECTOS GLASSMORPHISM */
+/* ================================================================= */
+
+.auth-form {
+  padding: 32px;
+  position: relative;
+}
+
+.auth-field {
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.auth-field label {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  position: relative;
+}
+
+.auth-field label::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, #00ff9d, #00cc7a);
+  border-radius: 1px;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.auth-field input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border: 1px solid rgba(0, 255, 157, 0.5);
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 100%);
+  box-shadow:
+    0 0 0 3px rgba(0, 255, 157, 0.1),
+    0 8px 32px rgba(0, 255, 157, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.auth-field input:focus::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ================================================================= */
+/* BOTÓN MODERNO CON EFECTOS AVANZADOS */
+/* ================================================================= */
+
+.auth-submit {
+  width: 100%;
+  padding: 18px;
+  background:
+    linear-gradient(135deg,
+      #00ff9d 0%,
+      #00cc7a 50%,
+      #00b366 100%);
+  border: none;
+  border-radius: 16px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 25px rgba(0, 255, 157, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.auth-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent);
+  transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.auth-submit:hover:not(:disabled) {
+  background:
+    linear-gradient(135deg,
+      #00e68a 0%,
+      #00b366 50%,
+      #009952 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 15px 40px rgba(0, 255, 157, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.auth-submit:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.auth-submit:active:not(:disabled) {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow:
+    0 5px 15px rgba(0, 255, 157, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.auth-submit:disabled {
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ================================================================= */
+/* ERROR MESSAGE MODERNO */
+/* ================================================================= */
+
+.auth-error {
+  background:
+    linear-gradient(135deg,
+      rgba(255, 68, 68, 0.1) 0%,
+      rgba(255, 68, 68, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  color: #ff6b6b;
+  font-size: 14px;
+  font-weight: 500;
+  display: none;
+  animation: authErrorSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.auth-error::before {
+  content: '⚠';
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+@keyframes authErrorSlideIn {
+  from {
+    transform: translateY(-15px) scale(0.95);
+    opacity: 0;
+    filter: blur(3px);
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* ================================================================= */
+/* FOOTER MODERNO */
+/* ================================================================= */
+
+.auth-footer {
+  padding: 24px 32px 32px;
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(0, 0, 0, 0.1) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+  position: relative;
+}
+
+.auth-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
+}
+
+.auth-footer p {
+  margin: 0 0 8px 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.auth-footer p:first-child {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-footer p:last-child {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* ================================================================= */
+/* EFECTOS DE CARGA MODERNOS */
+/* ================================================================= */
+
+.auth-submit.loading {
+  pointer-events: none;
+  position: relative;
+}
+
+.auth-submit.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  animation: authSpinner 1s linear infinite;
+}
+
+@keyframes authSpinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================================= */
+/* RESPONSIVE DESIGN MEJORADO */
+/* ================================================================= */
+
+@media (max-width: 520px) {
+  .auth-modal {
+    width: 95vw;
+    margin: 10px;
+    border-radius: 20px;
+  }
+
+  .auth-header,
+  .auth-form,
+  .auth-footer {
+    padding: 24px;
+  }
+
+  .auth-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .auth-field input {
+    padding: 14px 18px;
+    font-size: 16px;
+    /* Evita zoom en iOS */
+  }
+
+  .auth-submit {
+    padding: 16px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .auth-header,
+  .auth-form,
+  .auth-footer {
+    padding: 20px;
+  }
+}
+
+/* ================================================================= */
+/* MEJORAS A LA VENTANA DE TRADUCCIÓN */
+/* ================================================================= */
+
+
+.translation-status {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  background:
+    linear-gradient(135deg,
+      rgba(0, 255, 157, 0.15) 0%,
+      rgba(0, 204, 122, 0.15) 100%);
+  backdrop-filter: blur(15px);
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: 14px;
+  z-index: 9998;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid rgba(0, 255, 157, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 255, 157, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: statusSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes statusSlideIn {
+  from {
+    transform: translateX(100%) scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ================================================================= */
+/* DARK MODE SUPPORT */
+/* ================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  .auth-modal {
+    background:
+      linear-gradient(135deg,
+        rgba(30, 30, 30, 0.95) 0%,
+        rgba(15, 15, 15, 0.95) 100%);
+  }
+}
+
+/* ================================================================= */
+/* ACCESIBILIDAD */
+/* ================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .auth-modal-overlay,
+  .auth-modal,
+  .auth-submit,
+  .auth-close,
+  .auth-field input,
+  .auth-error {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus visible para navegación por teclado */
+.auth-field input:focus-visible,
+.auth-submit:focus-visible,
+.auth-close:focus-visible {
+  outline: 2px solid #00ff9d;
+  outline-offset: 2px;
+}
