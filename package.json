@@ -1,0 +1,26 @@
+{
+  "name": "extension",
+  "version": "1.0.0",
+  "main": "content.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "dotenv": "^16.5.0",
+    "dotenv-webpack": "^8.1.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "@google-cloud/translate": "^9.1.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "emoji-regex": "^10.4.0",
+    "franc-min": "^6.2.0",
+    "langdetect": "^0.2.1"
+  }
+}

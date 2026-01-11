@@ -1,0 +1,47 @@
+{
+   "manifest_version": 3,
+   "name": "Chat Translator",
+   "version": "1.0",
+   "description": "Traductor automático para mensajes de chat en Stripchat.",
+   "permissions": [
+      "activeTab",
+      "scripting",
+      "storage"
+   ],
+   "host_permissions": [
+      "https://*.stripchat.com/*",
+      "https://*.chaturbate.com/*",
+      "https://cdn.jsdelivr.net/*",
+      "https://storage.googleapis.com/*",
+      "https://translate.googleapis.com/*",
+      "https://translation.googleapis.com/*",
+      "https://api.mymemory.translated.net/*",
+      "https://*.supabase.co/*",
+      "https://*.supabase.com/*"
+   ],
+   "icons": {
+      "16": "icons/icon.png"
+   },
+   "content_scripts": [
+      {
+         "matches": [
+            "https://*.stripchat.com/*",
+            "https://*.chaturbate.com/*"
+         ],
+         "js": [
+            "dist/content.bundle.js"
+         ],
+         "css": [
+            "styles.css"
+         ]
+      }
+   ],
+   "action": {
+      "default_icon": {
+         "16": "icons/icon.png"
+      }
+   },
+   "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+   }
+}
